@@ -1,23 +1,8 @@
 "use client";
 import * as React from "react";
-
-import { User, columns } from "../app/users/columns";
-import { DataTable } from "../app/users/data-table";
-
-async function getData(): Promise<User[]> {
-  // Fetch data from API.
-  const getUsers =
-    "https://n913tmwy61.execute-api.us-east-2.amazonaws.com/items";
-
-  try {
-    const response = await fetch(getUsers);
-    const users = await response.json();
-    return users
-  } catch (error) {
-    console.error(`Fetch Error: ${error}`);
-    return [];
-  }
-}
+import { User, columns } from "../components/columns";
+import { DataTable } from "../components/data-table";
+import { getData } from "@/fetch/fetchData";
 
 export default function Home() {
   const [data, setData] = React.useState<User[]>([]);
