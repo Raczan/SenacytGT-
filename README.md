@@ -6,8 +6,9 @@ Este proyecto es un ejemplo básico de un sistema CRUD (Crear, Leer, Actualizar,
 
 ## Tecnologías Utilizadas
 
-- **Lenguaje de Programación:** React JS
+- **Lenguaje de Programación:** JSX
 - **Framework Web:** Next JS
+- **Librerias:** React JS, Tailwind, ShadCn
 
 ## Estructura del Proyecto
 
@@ -16,27 +17,24 @@ El proyecto está organizado de la siguiente manera:
 ```
 |-- src
 |   |-- app
-|   |   |-- users
-|   |   |   |-- columns.tsx
-|   |   |   |-- data-table.tsx
-|   |   |   |-- columns.tsx
 |   |   |-- layout.tsx
 |   |   |-- page.tsx
 |   |-- components
-|   |   |   |-- button.tsx
-|   |   |   |-- dropdown-menu.tsx
-|   |   |   |-- input.tsx
-|   |   |   |-- table.tsx
-|   |-- lib
-|   |   |-- utils.ts
+|   |   |   |-- ui
+|   |   |   |-- columns.tsx
+|   |   |   |-- data-table.tsx
+|   |   |   |-- modal-user.tsx
+|   |-- fetch
+|   |   |   |-- fetchData.tsx
 |-- package.json
 |-- README.md
 ```
 
-- **app:** Contiene los archivos relacionados con la aplicación web.
+- **src:** Contiene el codigo de la aplicación web.
 
+  - **app:** Contiene los archivos que inician la app.
   - **components:** Contiene los componentes de la app.
-  - **lib:** librerias usadas.
+  - **fetch:** Contiene el archivo usado para las peticiones.
 
 - **package.json:** Dependencias necesarias para el funcionamiento del mismo.
 
@@ -48,7 +46,7 @@ El proyecto está organizado de la siguiente manera:
 
 ## Ejecución
 
-1. Ejecuta la aplicación: `npx run dev`
+1. Ejecuta la aplicación: `npx next dev`
 2. Abre tu navegador y visita `http://localhost:3000`
 
 ## Funcionalidades
@@ -60,6 +58,8 @@ El sistema ofrece las siguientes funcionalidades básicas de CRUD:
 - **Actualizar:** Modifica la información de un registro existente.
 - **Eliminar:** Elimina un registro.
 
-## Contribuciones
+## Link de la aplicacion web
 
-¡Las contribuciones son bienvenidas! Si encuentras alguna mejora o corrección, no dudes en abrir un problema o enviar un pull request.
+https://senacyt-dy7mkwd0x-raczan.vercel.app/
+
+
