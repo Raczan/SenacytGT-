@@ -59,6 +59,11 @@ export function DataTable<TData, TValue>({
       adUser: (user: User) => {
         setData((current: User[]) => [...current, user]);
       },
+      updateUser: (user: User, index: number) => {
+        let updatedUsers = data.slice();
+        updatedUsers[index] = user;
+        setData(updatedUsers);
+      },
     },
   });
 

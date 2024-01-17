@@ -25,7 +25,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { table } from "@/app/users/data-table";
 
-export function AddUser({ hideBtn, open, setOpen, type, user }) {
+export function AddUser({ hideBtn, open, setOpen, type, user, index }) {
   const formSchema = z.object({
     nombre: z.string().trim().min(1, { message: "El nombre es obligatorio" }),
     codigo_postal: z.string(),
@@ -56,11 +56,8 @@ export function AddUser({ hideBtn, open, setOpen, type, user }) {
     bic: z.string(),
     id: z
       .string()
-      .regex(
-        new RegExp(/d{8}[A-Z]/),
-        "Primeros 8 caracteres son dígitos, y el último es una letra mayúscula"
-      )
-      .min(1, { message: "ID es obligatorio" }),
+      .min(1, { message: "ID es obligatorio" })
+      .regex(new RegExp(/^\d{8}[A-Z]$/), "Primeros 8 caracteres son dígitos, y el último es una letra mayúscula"),
     tarjeta: z.string(),
   });
 
@@ -96,13 +93,18 @@ export function AddUser({ hideBtn, open, setOpen, type, user }) {
   async function putUser(payload: object) {
     const putEndPoint =
       "https://n913tmwy61.execute-api.us-east-2.amazonaws.com/items";
-    const response = await fetch(putEndPoint, {
-      method: "PUT",
-      body: JSON.stringify(payload),
-    });
-    const resPut = await response.json();
-    setOpen(false);
-    console.log(resPut);
+
+    try {
+      const response = await fetch(putEndPoint, {
+        method: "PUT",
+        body: JSON.stringify(payload),
+      });
+      const resPut = await response.json();
+      setOpen(false);
+      console.log(resPut);
+    } catch (error) {
+      console.error(`Fetch Error: ${error}`);
+    }
   }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -110,7 +112,11 @@ export function AddUser({ hideBtn, open, setOpen, type, user }) {
       values.nombre + " " + values.apellido1 + " " + values.apellido2;
     putUser(values);
     const meta = table.options.meta;
-    meta.adUser(values);
+    if (type === "Editar") {
+      meta.updateUser(values, index);
+    } else {
+      meta.adUser(values);
+    }
   }
 
   useEffect(() => {
@@ -143,7 +149,7 @@ export function AddUser({ hideBtn, open, setOpen, type, user }) {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="Nombre" {...field} />
+                      <Input placeholder="Nombre" {...field} className="mt-2"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -154,7 +160,7 @@ export function AddUser({ hideBtn, open, setOpen, type, user }) {
                   control={form.control}
                   name="apellido1"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="w-full">
                       <FormControl>
                         <Input placeholder="Primer apellido" {...field} />
                       </FormControl>
@@ -166,9 +172,9 @@ export function AddUser({ hideBtn, open, setOpen, type, user }) {
                   control={form.control}
                   name="apellido2"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="w-full">
                       <FormControl>
-                        <Input placeholder="Segundo apellido" {...field} />
+                        <Input placeholder="Segundo apellido" {...field}/>
                       </FormControl>
                       <FormMessage />
                     </FormItem>

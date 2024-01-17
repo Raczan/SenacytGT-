@@ -8,9 +8,15 @@ async function getData(): Promise<User[]> {
   // Fetch data from API.
   const getUsers =
     "https://n913tmwy61.execute-api.us-east-2.amazonaws.com/items";
-  const response = await fetch(getUsers);
-  const users = await response.json();
-  return users;
+
+  try {
+    const response = await fetch(getUsers);
+    const users = await response.json();
+    return users
+  } catch (error) {
+    console.error(`Fetch Error: ${error}`);
+    return [];
+  }
 }
 
 export default function Home() {

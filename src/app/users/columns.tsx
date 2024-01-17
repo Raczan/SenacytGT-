@@ -28,11 +28,16 @@ import { AddUser } from "@/components/add-user";
 
 async function deleteUser(id: string) {
   const deleteEndPoint = `https://n913tmwy61.execute-api.us-east-2.amazonaws.com/items/${id}`;
-  const response = await fetch(deleteEndPoint, {
-    method: "DELETE",
-  });
-  const resDeletion = await response.json();
-  console.log(resDeletion);
+  
+  try {
+    const response = await fetch(deleteEndPoint, {
+      method: "DELETE",
+    });
+    const resDeletion = await response.json();
+    console.log(resDeletion);
+  } catch (error) {
+    console.error(`Fetch Error: ${error}`);
+  }
 }
 
 export type User = {
@@ -131,6 +136,7 @@ export const columns: ColumnDef<User>[] = [
             setOpen={setOpen}
             type="Editar"
             user={user}
+            index={row.index}
           />
         </AlertDialog>
       );
